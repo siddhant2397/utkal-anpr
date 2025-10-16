@@ -117,7 +117,9 @@ with tab_dashboard:
     for plate in all_plates:
         entry_status = "Recorded" if plate in plates_in else "Not Recorded"
         exit_info = plates_out.get(plate, {})
-        exit_status = "Exited" if plate in plates_out else "Not Exited"
+        exit_status = ("Flagged" if plate in plates_out and not plates_out[plate].get("authorized", False)
+                       else ("Exited" if plate in plates_out else "Not Exited"))
+
         authorized = exit_info.get("authorized", "")
         exit_time = exit_info.get("timestamp", "")
         dashboard_data.append({
