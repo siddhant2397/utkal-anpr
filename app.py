@@ -51,9 +51,8 @@ tab_entry, tab_exit, tab_dashboard = st.tabs(["Entry", "Exit", "Dashboard"])
 
 # Entry Tab
 with tab_entry:
-    location_in = st.text_input("Entry: Enter location (site, gate, etc.)")
     file_in = st.file_uploader("Upload entry image (jpg/png/pdf)", type=["jpg", "jpeg", "png", "pdf"], key="entry_upload")
-    if location_in and file_in is not None:
+    if file_in is not None:
         st.info("Running plate recognition...")
         with st.spinner("Processing Entry Image..."):
             plate_val, plate_val_uniform = run_inference(file_in)
@@ -67,7 +66,6 @@ with tab_entry:
             else:
                 entry_collection.insert_one({
                     "timestamp": timestamp_ist,
-                    "location": location_in,
                     "plate_number": plate_val_uniform,
                     "original_plate": plate_val,
                 })
@@ -77,9 +75,8 @@ with tab_entry:
 
 # Exit Tab
 with tab_exit:
-    location_out = st.text_input("Exit: Enter location (site, gate, etc.)")
     file_out = st.file_uploader("Upload exit image (jpg/png/pdf)", type=["jpg", "jpeg", "png", "pdf"], key="exit_upload")
-    if location_out and file_out is not None:
+    if file_out is not None:
         st.info("Running plate recognition...")
         with st.spinner("Processing Exit Image..."):
             plate_val, plate_val_uniform = run_inference(file_out)
@@ -91,7 +88,6 @@ with tab_exit:
             authorized = bool(entry_exists)
             exit_collection.insert_one({
                 "timestamp": timestamp_ist,
-                "location": location_out,
                 "plate_number": plate_val_uniform,
                 "original_plate": plate_val,
                 "authorized": authorized
