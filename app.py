@@ -46,7 +46,7 @@ def run_inference(uploaded_file):
         os.remove(input_path)
     return plate_val, plate_val_uniform
 
-st.title("Automatic Number Plate Recognition System")
+st.title("Utkal ANPR System")
 tab_entry, tab_exit, tab_dashboard = st.tabs(["Entry", "Exit", "Dashboard"])
 
 # Entry Tab
